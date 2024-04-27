@@ -16,8 +16,8 @@ func Test_SimulationYears_Cash(t *testing.T) {
 	}
 	years := 10
 	simYears := SimulateYears(years, cash)
-	firstCash := simYears[0].(asset)
-	lastCash := simYears[years].(asset)
+	firstCash := simYears[0]
+	lastCash := simYears[years]
 
 	assert.Len(t, simYears, years+1)
 	assert.Equal(t, float64(100_000), firstCash.GetCostBasis())

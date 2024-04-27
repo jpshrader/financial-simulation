@@ -4,13 +4,6 @@ import (
 	"math"
 )
 
-type asset interface {
-	Compound() any
-	GetValue() float64
-	GetCostBasis() float64
-	GetInterestIncome() float64
-}
-
 type CashEquivalent struct {
 	CostBasis           float64
 	InterestIncome      float64
@@ -18,7 +11,7 @@ type CashEquivalent struct {
 	RateOfReturn        float64
 }
 
-func (c CashEquivalent) Compound() any {
+func (c CashEquivalent) Compound() Asset {
 	c.InterestIncome += c.GetValue() * c.RateOfReturn
 	c.CostBasis += c.DefinedContribution
 	return c

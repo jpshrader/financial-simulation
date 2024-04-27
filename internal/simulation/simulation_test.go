@@ -13,7 +13,6 @@ func Test_SimulationYears_Cash(t *testing.T) {
 		InterestIncome:      float64(0),
 		DefinedContribution: float64(10_000),
 		RateOfReturn:        float64(0.05),
-		Value:               float64(100_000),
 	}
 	years := 10
 	simYears := SimulateYears(years, cash)

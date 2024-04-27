@@ -13,7 +13,6 @@ func main() {
 		InterestIncome:      float64(0),
 		DefinedContribution: float64(10_000),
 		RateOfReturn:        float64(0.05),
-		Value:               float64(100_000),
 	}
 	simYears := simulation.SimulateYears(10, cash)
 	for year, simYear := range simYears {
@@ -27,5 +26,5 @@ func logCash(year int, cash assets.CashEquivalent) {
 	fmt.Printf("interest income: $%.2f\n", assets.To2f(cash.InterestIncome))
 	fmt.Printf("defined contribution: $%.2f\n", assets.To2f(cash.DefinedContribution))
 	fmt.Printf("rate of return: %.2f\n", assets.To2f(cash.RateOfReturn))
-	fmt.Printf("value: $%.2f\n", assets.To2f(cash.Value))
+	fmt.Printf("value: $%.2f\n", assets.To2f(cash.GetValue()))
 }

@@ -2,32 +2,30 @@ package main
 
 import (
 	"fmt"
-	"math"
+
+	"github.com/jpshrader/financial-simulation/internal/assets"
+	"github.com/jpshrader/financial-simulation/internal/simulation"
 )
 
 func main() {
-	cash := CashEquivalent{
+	cash := assets.CashEquivalent{
 		CostBasis:           float64(100_000),
 		InterestIncome:      float64(0),
 		DefinedContribution: float64(10_000),
 		RateOfReturn:        float64(0.05),
 		Value:               float64(100_000),
 	}
-	simYears := SimulateYears(10, cash)
+	simYears := simulation.SimulateYears(10, cash)
 	for year, simYear := range simYears {
-		logCash(year, simYear.(CashEquivalent))
+		logCash(year, simYear.(assets.CashEquivalent))
 	}
 }
 
-func logCash(year int, cash CashEquivalent) {
+func logCash(year int, cash assets.CashEquivalent) {
 	fmt.Printf("year %d:\n", year)
-	fmt.Printf("basis: $%.2f\n", to2f(cash.CostBasis))
-	fmt.Printf("interest income: $%.2f\n", to2f(cash.InterestIncome))
-	fmt.Printf("defined contribution: $%.2f\n", to2f(cash.DefinedContribution))
-	fmt.Printf("rate of return: %.2f\n", to2f(cash.RateOfReturn))
-	fmt.Printf("value: $%.2f\n", to2f(cash.Value))
-}
-
-func to2f(f float64) float64 {
-	return float64(math.Round(f*100)) / 100
+	fmt.Printf("basis: $%.2f\n", assets.To2f(cash.CostBasis))
+	fmt.Printf("interest income: $%.2f\n", assets.To2f(cash.InterestIncome))
+	fmt.Printf("defined contribution: $%.2f\n", assets.To2f(cash.DefinedContribution))
+	fmt.Printf("rate of return: %.2f\n", assets.To2f(cash.RateOfReturn))
+	fmt.Printf("value: $%.2f\n", assets.To2f(cash.Value))
 }

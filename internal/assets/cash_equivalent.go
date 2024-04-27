@@ -1,4 +1,15 @@
-package main
+package assets
+
+import (
+	"math"
+)
+
+type asset interface {
+	Compound() any
+	GetValue() float64
+	GetCostBasis() float64
+	GetInterestIncome() float64
+}
 
 type CashEquivalent struct {
 	CostBasis           float64
@@ -8,7 +19,7 @@ type CashEquivalent struct {
 	RateOfReturn        float64
 }
 
-func (c CashEquivalent) Compound() asset {
+func (c CashEquivalent) Compound() any {
 	c.InterestIncome += c.Value * c.RateOfReturn
 	c.CostBasis += c.DefinedContribution
 	c.Value = c.CostBasis + c.InterestIncome
@@ -16,13 +27,17 @@ func (c CashEquivalent) Compound() asset {
 }
 
 func (c CashEquivalent) GetValue() float64 {
-	return to2f(c.Value)
+	return To2f(c.Value)
 }
 
 func (c CashEquivalent) GetCostBasis() float64 {
-	return to2f(c.CostBasis)
+	return To2f(c.CostBasis)
 }
 
 func (c CashEquivalent) GetInterestIncome() float64 {
-	return to2f(c.InterestIncome)
+	return To2f(c.InterestIncome)
+}
+
+func To2f(f float64) float64 {
+	return float64(math.Round(f*100)) / 100
 }

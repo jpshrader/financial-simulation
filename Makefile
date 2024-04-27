@@ -1,8 +1,11 @@
 run:
-	go run .
+	go run main.go
 
 test:
-	go test -cover ./...
+	go test ./...
+
+build:
+	go build -v ./...
 
 update:
 	go get -u

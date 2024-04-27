@@ -1,20 +1,37 @@
 package simulation
 
-import "github.com/jpshrader/financial-simulation/internal/assets"
+import (
+	"github.com/jpshrader/financial-simulation/internal/assets"
+	"github.com/jpshrader/financial-simulation/internal/expenses"
+)
 
-func Simulate(as []assets.Asset) []assets.Asset {
-	newAssets := make([]assets.Asset, len(as))
-	for i, a := range as {
-		newAssets[i] = a.Compound()
-	}
-	return newAssets
+type Instructions struct {
+	Iterations int
+	Snapshot   Snapshot
 }
 
-func SimulateYears(years int, as []assets.Asset) [][]assets.Asset {
-	simYears := make([][]assets.Asset, years+1)
-	simYears[0] = as
-	for i := range years {
-		simYears[i+1] = Simulate(simYears[i])
+type Snapshot struct {
+	Year     int
+	Assets   []assets.Asset
+	Expenses []expenses.Expense
+}
+
+func Simulate(instructions Instructions) []Snapshot {
+	snapshots := make([]Snapshot, instructions.Iterations+1)
+	snapshots[0] = instructions.Snapshot
+	for i := range instructions.Iterations {
+		snapshots[i+1] = simulate(snapshots[i])
 	}
-	return simYears
+	return snapshots
+}
+
+func simulate(data Snapshot) Snapshot {
+	newAssets := make([]assets.Asset, len(data.Assets))
+	for i, a := range data.Assets {
+		newAssets[i] = a.Compound()
+	}
+	return Snapshot{
+		Year:   data.Year + 1,
+		Assets: newAssets,
+	}
 }

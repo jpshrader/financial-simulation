@@ -5,10 +5,15 @@ import (
 )
 
 type CashEquivalent struct {
+	Name           string
 	CostBasis      float64
 	InterestIncome float64
 	Contribution   float64
 	RateOfReturn   float64
+}
+
+func (c CashEquivalent) GetName() string {
+	return c.Name
 }
 
 func (c CashEquivalent) Compound() Asset {

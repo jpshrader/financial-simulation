@@ -7,38 +7,43 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_SimulationYears_Cash_And_Roth(t *testing.T) {
-	cash := assets.CashEquivalent{
-		CostBasis:    float64(100_000),
-		Contribution: float64(10_000),
-		RateOfReturn: float64(0.05),
+func Test_SimulateYears_Cash_And_Roth(t *testing.T) {
+	instructions := Instructions{
+		Iterations: 10,
+		Snapshot: Snapshot{
+			Assets: []assets.Asset{
+				assets.CashEquivalent{
+					CostBasis:    float64(100_000),
+					Contribution: float64(10_000),
+					RateOfReturn: float64(0.05),
+				},
+				assets.RothIra{
+					CostBasis:    float64(70_000),
+					Contribution: float64(7_000),
+					RateOfReturn: float64(0.07),
+				},
+			},
+		},
 	}
-	rothIra := assets.RothIra{
-		CostBasis:    float64(70_000),
-		Contribution: float64(7_000),
-		RateOfReturn: float64(0.07),
-	}
-	years := 10
-	as := []assets.Asset{cash, rothIra}
-	simYears := SimulateYears(years, as)
+	sim := Simulate(instructions)
 
-	assert.Len(t, simYears, years+1)
-	firstSim := simYears[0]
-	firstCash := firstSim[0]
+	assert.Len(t, sim, 11)
+	firstSim := sim[0]
+	firstCash := firstSim.Assets[0]
 	assert.Equal(t, float64(100_000), firstCash.GetCostBasis())
 	assert.Equal(t, float64(0), firstCash.GetGrossIncome())
 	assert.Equal(t, float64(100_000), firstCash.GetGrossValue())
-	firstRoth := firstSim[1]
+	firstRoth := firstSim.Assets[1]
 	assert.Equal(t, float64(70_000), firstRoth.GetCostBasis())
 	assert.Equal(t, float64(0), firstRoth.GetGrossIncome())
 	assert.Equal(t, float64(70_000), firstRoth.GetGrossValue())
 
-	lastSim := simYears[years]
-	lastCash := lastSim[0]
+	lastSim := sim[10]
+	lastCash := lastSim.Assets[0]
 	assert.Equal(t, float64(200_000), lastCash.GetCostBasis())
 	assert.Equal(t, float64(88_668.39), lastCash.GetGrossIncome())
 	assert.Equal(t, float64(288_668.39), lastCash.GetGrossValue())
-	lastRoth := lastSim[1]
+	lastRoth := lastSim.Assets[1]
 	assert.Equal(t, float64(140_000), lastRoth.GetCostBasis())
 	assert.Equal(t, float64(94_415.73), lastRoth.GetGrossIncome())
 	assert.Equal(t, float64(234_415.73), lastRoth.GetGrossValue())

@@ -5,10 +5,15 @@ import (
 )
 
 type RothIra struct {
+	Name         string
 	CostBasis    float64
 	CapitalGains float64
 	Contribution float64
 	RateOfReturn float64
+}
+
+func (r RothIra) GetName() string {
+	return r.Name
 }
 
 func (r RothIra) Compound() Asset {

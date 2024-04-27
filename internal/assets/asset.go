@@ -2,7 +2,8 @@ package assets
 
 type Asset interface {
 	Compound() Asset
-	GetValue() float64
+	GetGrossValue() float64
 	GetCostBasis() float64
-	GetInterestIncome() float64
+	GetGrossIncome() float64
+	GetNetIncome(capitalGainsRate float64) float64
 }

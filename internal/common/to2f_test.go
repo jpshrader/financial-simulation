@@ -1,4 +1,4 @@
-package assets
+package common
 
 import (
 	"testing"

@@ -1,34 +1,38 @@
 package assets
 
 import (
-	"math"
+	"github.com/jpshrader/financial-simulation/internal/common"
 )
 
 type CashEquivalent struct {
-	CostBasis           float64
-	InterestIncome      float64
-	DefinedContribution float64
-	RateOfReturn        float64
+	CostBasis      float64
+	InterestIncome float64
+	Contribution   float64
+	RateOfReturn   float64
 }
 
 func (c CashEquivalent) Compound() Asset {
-	c.InterestIncome += c.GetValue() * c.RateOfReturn
-	c.CostBasis += c.DefinedContribution
+	c.InterestIncome += c.GetGrossValue() * c.RateOfReturn
+	c.CostBasis += c.Contribution
 	return c
 }
 
-func (c CashEquivalent) GetValue() float64 {
-	return To2f(c.CostBasis + c.InterestIncome)
-}
-
 func (c CashEquivalent) GetCostBasis() float64 {
-	return To2f(c.CostBasis)
+	return common.To2f(c.CostBasis)
 }
 
-func (c CashEquivalent) GetInterestIncome() float64 {
-	return To2f(c.InterestIncome)
+func (c CashEquivalent) GetGrossValue() float64 {
+	return common.To2f(c.CostBasis + c.InterestIncome)
 }
 
-func To2f(f float64) float64 {
-	return float64(math.Round(f*100)) / 100
+func (c CashEquivalent) GetNetValue(capitalGainsRate float64) float64 {
+	return common.To2f(c.GetCostBasis() + c.GetNetIncome(capitalGainsRate))
+}
+
+func (c CashEquivalent) GetGrossIncome() float64 {
+	return common.To2f(c.InterestIncome)
+}
+
+func (c CashEquivalent) GetNetIncome(capitalGainsRate float64) float64 {
+	return common.To2f(c.InterestIncome * (1 - capitalGainsRate))
 }

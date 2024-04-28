@@ -13,6 +13,7 @@ func main() {
 	instructions := simulation.Instructions{
 		Iterations: 10,
 		Snapshot: simulation.Snapshot{
+			Year: 2024,
 			Assets: []assets.Asset{
 				assets.CashEquivalent{
 					Name:         "cash",

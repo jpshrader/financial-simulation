@@ -5,20 +5,27 @@ import (
 )
 
 type RothIra struct {
-	Name         string
-	CostBasis    float64
-	CapitalGains float64
-	Contribution float64
-	RateOfReturn float64
+	Name             string
+	CostBasis        float64
+	CapitalGains     float64
+	Contribution     float64
+	RateOfReturn     float64
+	YearToDateGrowth float64
 }
 
 func (r RothIra) GetName() string {
 	return r.Name
 }
 
-func (r RothIra) Compound() Asset {
-	r.CapitalGains += r.GetGrossValue() * r.RateOfReturn
-	r.CostBasis += r.Contribution
+func (r RothIra) Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset {
+	if isNewYear {
+		r.YearToDateGrowth = 0
+	}
+	gains := ((r.GetGrossValue() - r.YearToDateGrowth) * r.RateOfReturn) / float64(schedule)
+	r.CapitalGains += gains
+	contribution := r.Contribution / float64(schedule)
+	r.CostBasis += contribution
+	r.YearToDateGrowth += gains + contribution
 	return r
 }
 

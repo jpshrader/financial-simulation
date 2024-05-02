@@ -5,20 +5,27 @@ import (
 )
 
 type CashEquivalent struct {
-	Name           string
-	CostBasis      float64
-	InterestIncome float64
-	Contribution   float64
-	RateOfReturn   float64
+	Name             string
+	CostBasis        float64
+	InterestIncome   float64
+	Contribution     float64
+	RateOfReturn     float64
+	YearToDateGrowth float64
 }
 
 func (c CashEquivalent) GetName() string {
 	return c.Name
 }
 
-func (c CashEquivalent) Compound() Asset {
-	c.InterestIncome += c.GetGrossValue() * c.RateOfReturn
-	c.CostBasis += c.Contribution
+func (c CashEquivalent) Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset {
+	if isNewYear {
+		c.YearToDateGrowth = 0
+	}
+	income := ((c.GetGrossValue() - c.YearToDateGrowth) * c.RateOfReturn) / float64(schedule)
+	c.InterestIncome += income
+	contribution := c.Contribution / float64(schedule)
+	c.CostBasis += contribution
+	c.YearToDateGrowth += income + contribution
 	return c
 }
 

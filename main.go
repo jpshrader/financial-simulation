@@ -11,7 +11,8 @@ import (
 
 func main() {
 	instructions := simulation.Instructions{
-		Iterations: 10,
+		Years:               10,
+		CompoundingSchedule: common.Annually,
 		Snapshot: simulation.Snapshot{
 			Year: 2024,
 			Assets: []assets.Asset{

@@ -10,7 +10,7 @@ import (
 
 func TestSimulateYearsCashYearly(t *testing.T) {
 	instructions := Instructions{
-		Iterations:          10,
+		Years:          10,
 		CompoundingSchedule: common.Annually,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
@@ -24,7 +24,7 @@ func TestSimulateYearsCashYearly(t *testing.T) {
 	}
 	sim := Simulate(instructions)
 
-	numSims := instructions.Iterations * int(instructions.CompoundingSchedule)
+	numSims := instructions.Years * int(instructions.CompoundingSchedule)
 	assert.Len(t, sim, numSims+1)
 	firstSim := sim[0]
 	firstCash := firstSim.Assets[0]
@@ -41,7 +41,7 @@ func TestSimulateYearsCashYearly(t *testing.T) {
 
 func TestSimulateYearsCashMontly(t *testing.T) {
 	instructions := Instructions{
-		Iterations:          10,
+		Years:          10,
 		CompoundingSchedule: common.Monthly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
@@ -55,7 +55,7 @@ func TestSimulateYearsCashMontly(t *testing.T) {
 	}
 	sim := Simulate(instructions)
 
-	numSims := instructions.Iterations * int(instructions.CompoundingSchedule)
+	numSims := instructions.Years * int(instructions.CompoundingSchedule)
 	assert.Len(t, sim, numSims+1)
 	firstSim := sim[0]
 	firstCash := firstSim.Assets[0]
@@ -70,10 +70,10 @@ func TestSimulateYearsCashMontly(t *testing.T) {
 	assert.Equal(t, float64(288_668.39), lastCash.GetGrossValue())
 }
 
-func TestSimulateYearsCashWeekly(t *testing.T) {
+func TestSimulateYearsCashQuarterly(t *testing.T) {
 	instructions := Instructions{
-		Iterations:          10,
-		CompoundingSchedule: common.Weekly,
+		Years:               10,
+		CompoundingSchedule: common.Quarterly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.CashEquivalent{
@@ -86,7 +86,7 @@ func TestSimulateYearsCashWeekly(t *testing.T) {
 	}
 	sim := Simulate(instructions)
 
-	numSims := instructions.Iterations * int(instructions.CompoundingSchedule)
+	numSims := instructions.Years * int(instructions.CompoundingSchedule)
 	assert.Len(t, sim, numSims+1)
 	firstSim := sim[0]
 	firstCash := firstSim.Assets[0]
@@ -103,7 +103,7 @@ func TestSimulateYearsCashWeekly(t *testing.T) {
 
 func TestSimulateYearsRothYearly(t *testing.T) {
 	instructions := Instructions{
-		Iterations:          10,
+		Years:          10,
 		CompoundingSchedule: common.Annually,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
@@ -117,7 +117,7 @@ func TestSimulateYearsRothYearly(t *testing.T) {
 	}
 	sim := Simulate(instructions)
 
-	numSims := instructions.Iterations * int(instructions.CompoundingSchedule)
+	numSims := instructions.Years * int(instructions.CompoundingSchedule)
 	assert.Len(t, sim, numSims+1)
 	firstSim := sim[0]
 	firstRoth := firstSim.Assets[0]
@@ -134,7 +134,7 @@ func TestSimulateYearsRothYearly(t *testing.T) {
 
 func TestSimulateYearsRothMonthly(t *testing.T) {
 	instructions := Instructions{
-		Iterations:          10,
+		Years:          10,
 		CompoundingSchedule: common.Monthly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
@@ -148,7 +148,7 @@ func TestSimulateYearsRothMonthly(t *testing.T) {
 	}
 	sim := Simulate(instructions)
 
-	numSims := instructions.Iterations * int(instructions.CompoundingSchedule)
+	numSims := instructions.Years * int(instructions.CompoundingSchedule)
 	assert.Len(t, sim, numSims+1)
 	firstSim := sim[0]
 	firstRoth := firstSim.Assets[0]
@@ -163,10 +163,10 @@ func TestSimulateYearsRothMonthly(t *testing.T) {
 	assert.Equal(t, float64(234_415.73), lastRoth.GetGrossValue())
 }
 
-func TestSimulateYearsRothWeekly(t *testing.T) {
+func TestSimulateYearsRothQuarterly(t *testing.T) {
 	instructions := Instructions{
-		Iterations:          10,
-		CompoundingSchedule: common.Weekly,
+		Years:          10,
+		CompoundingSchedule: common.Quarterly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.RothIra{
@@ -179,7 +179,7 @@ func TestSimulateYearsRothWeekly(t *testing.T) {
 	}
 	sim := Simulate(instructions)
 
-	numSims := instructions.Iterations * int(instructions.CompoundingSchedule)
+	numSims := instructions.Years * int(instructions.CompoundingSchedule)
 	assert.Len(t, sim, numSims+1)
 	firstSim := sim[0]
 	firstRoth := firstSim.Assets[0]

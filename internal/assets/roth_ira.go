@@ -22,8 +22,9 @@ func (r RothIra) Compound(schedule common.CompoundingSchedule, isNewYear bool) A
 		r.YearToDateGrowth = 0
 	}
 	gains := ((r.GetGrossValue() - r.YearToDateGrowth) * r.RateOfReturn) / float64(schedule)
-	r.CapitalGains += gains
 	contribution := r.Contribution / float64(schedule)
+
+	r.CapitalGains += gains
 	r.CostBasis += contribution
 	r.YearToDateGrowth += gains + contribution
 	return r

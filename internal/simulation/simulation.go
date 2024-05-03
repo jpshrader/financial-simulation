@@ -7,7 +7,7 @@ import (
 )
 
 type Instructions struct {
-	Iterations          int
+	Years               int
 	CompoundingSchedule common.CompoundingSchedule
 	Snapshot            Snapshot
 }
@@ -19,9 +19,9 @@ type Snapshot struct {
 }
 
 func Simulate(instructions Instructions) []Snapshot {
-	snapshots := make([]Snapshot, (instructions.Iterations*int(instructions.CompoundingSchedule))+1)
+	snapshots := make([]Snapshot, (instructions.Years*int(instructions.CompoundingSchedule))+1)
 	snapshots[0] = instructions.Snapshot
-	for i := range instructions.Iterations * int(instructions.CompoundingSchedule) {
+	for i := range instructions.Years * int(instructions.CompoundingSchedule) {
 		snapshots[i+1] = simulate(snapshots[i], i, instructions.CompoundingSchedule)
 	}
 	return snapshots

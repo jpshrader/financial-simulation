@@ -3,14 +3,14 @@ package common
 type CompoundingSchedule int
 
 const (
-	Annually CompoundingSchedule = 1
-	Monthly  CompoundingSchedule = 12
-	Weekly   CompoundingSchedule = 52
+	Annually  CompoundingSchedule = 1
+	Quarterly CompoundingSchedule = 4
+	Monthly   CompoundingSchedule = 12
 )
 
 func (c CompoundingSchedule) IsValid() bool {
 	switch c {
-	case Annually, Monthly, Weekly:
+	case Annually, Quarterly, Monthly:
 		return true
 	default:
 		return false

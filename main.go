@@ -26,7 +26,7 @@ func main() {
 					Name:         "roth",
 					CostBasis:    float64(70_000),
 					Contribution: float64(7_000),
-					RateOfReturn: float64(.07),
+					RateOfReturn: float64(0.07),
 				},
 			},
 		},

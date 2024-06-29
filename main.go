@@ -29,6 +29,12 @@ func main() {
 					Contribution: float64(7_000),
 					RateOfReturn: float64(0.07),
 				},
+				assets.Hsa{
+					Name:         "hsa",
+					CostBasis:    float64(25_000),
+					Contribution: float64(3_500),
+					RateOfReturn: float64(0.05),
+				},
 			},
 		},
 	}

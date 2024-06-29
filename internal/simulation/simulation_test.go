@@ -4,14 +4,14 @@ import (
 	"testing"
 
 	"github.com/jpshrader/financial-simulation/internal/assets"
-	"github.com/jpshrader/financial-simulation/internal/common"
+	"github.com/jpshrader/financial-simulation/internal/compound"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSimulateYearsCashYearly(t *testing.T) {
 	instructions := Instructions{
-		Years:          10,
-		CompoundingSchedule: common.Annually,
+		Years:               10,
+		CompoundingSchedule: compound.Annually,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.CashEquivalent{
@@ -41,8 +41,8 @@ func TestSimulateYearsCashYearly(t *testing.T) {
 
 func TestSimulateYearsCashMontly(t *testing.T) {
 	instructions := Instructions{
-		Years:          10,
-		CompoundingSchedule: common.Monthly,
+		Years:               10,
+		CompoundingSchedule: compound.Monthly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.CashEquivalent{
@@ -73,7 +73,7 @@ func TestSimulateYearsCashMontly(t *testing.T) {
 func TestSimulateYearsCashQuarterly(t *testing.T) {
 	instructions := Instructions{
 		Years:               10,
-		CompoundingSchedule: common.Quarterly,
+		CompoundingSchedule: compound.Quarterly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.CashEquivalent{
@@ -103,8 +103,8 @@ func TestSimulateYearsCashQuarterly(t *testing.T) {
 
 func TestSimulateYearsRothYearly(t *testing.T) {
 	instructions := Instructions{
-		Years:          10,
-		CompoundingSchedule: common.Annually,
+		Years:               10,
+		CompoundingSchedule: compound.Annually,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.RothIra{
@@ -134,8 +134,8 @@ func TestSimulateYearsRothYearly(t *testing.T) {
 
 func TestSimulateYearsRothMonthly(t *testing.T) {
 	instructions := Instructions{
-		Years:          10,
-		CompoundingSchedule: common.Monthly,
+		Years:               10,
+		CompoundingSchedule: compound.Monthly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.RothIra{
@@ -165,8 +165,8 @@ func TestSimulateYearsRothMonthly(t *testing.T) {
 
 func TestSimulateYearsRothQuarterly(t *testing.T) {
 	instructions := Instructions{
-		Years:          10,
-		CompoundingSchedule: common.Quarterly,
+		Years:               10,
+		CompoundingSchedule: compound.Quarterly,
 		Snapshot: Snapshot{
 			Assets: []assets.Asset{
 				assets.RothIra{

@@ -1,7 +1,8 @@
 package assets
 
 import (
-	"github.com/jpshrader/financial-simulation/internal/common"
+	"github.com/jpshrader/financial-simulation/internal/compound"
+	"github.com/jpshrader/financial-simulation/internal/format"
 )
 
 type CashEquivalent struct {
@@ -17,7 +18,7 @@ func (c CashEquivalent) GetName() string {
 	return c.Name
 }
 
-func (c CashEquivalent) Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset {
+func (c CashEquivalent) Compound(schedule compound.CompoundingSchedule, isNewYear bool) Asset {
 	if isNewYear {
 		c.YearToDateGrowth = 0
 	}
@@ -30,21 +31,21 @@ func (c CashEquivalent) Compound(schedule common.CompoundingSchedule, isNewYear 
 }
 
 func (c CashEquivalent) GetCostBasis() float64 {
-	return common.To2f(c.CostBasis)
+	return format.To2f(c.CostBasis)
 }
 
 func (c CashEquivalent) GetGrossValue() float64 {
-	return common.To2f(c.CostBasis + c.InterestIncome)
+	return format.To2f(c.CostBasis + c.InterestIncome)
 }
 
 func (c CashEquivalent) GetNetValue(capitalGainsRate float64) float64 {
-	return common.To2f(c.GetCostBasis() + c.GetNetIncome(capitalGainsRate))
+	return format.To2f(c.GetCostBasis() + c.GetNetIncome(capitalGainsRate))
 }
 
 func (c CashEquivalent) GetGrossIncome() float64 {
-	return common.To2f(c.InterestIncome)
+	return format.To2f(c.InterestIncome)
 }
 
 func (c CashEquivalent) GetNetIncome(capitalGainsRate float64) float64 {
-	return common.To2f(c.InterestIncome * (1 - capitalGainsRate))
+	return format.To2f(c.InterestIncome * (1 - capitalGainsRate))
 }

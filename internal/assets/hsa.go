@@ -1,6 +1,9 @@
 package assets
 
-import "github.com/jpshrader/financial-simulation/internal/common"
+import (
+	"github.com/jpshrader/financial-simulation/internal/compound"
+	"github.com/jpshrader/financial-simulation/internal/format"
+)
 
 type Hsa struct {
 	Name             string
@@ -15,7 +18,7 @@ func (h Hsa) GetName() string {
 	return h.Name
 }
 
-func (h Hsa) Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset {
+func (h Hsa) Compound(schedule compound.CompoundingSchedule, isNewYear bool) Asset {
 	if isNewYear {
 		h.YearToDateGrowth = 0
 	}
@@ -28,21 +31,21 @@ func (h Hsa) Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset
 }
 
 func (h Hsa) GetCostBasis() float64 {
-	return common.To2f(h.CostBasis)
+	return format.To2f(h.CostBasis)
 }
 
 func (h Hsa) GetGrossValue() float64 {
-	return common.To2f(h.CostBasis + h.CapitalGains)
+	return format.To2f(h.CostBasis + h.CapitalGains)
 }
 
 func (h Hsa) GetNetValue(capitalGainsRate float64) float64 {
-	return common.To2f(h.GetCostBasis() + h.GetNetIncome(capitalGainsRate))
+	return format.To2f(h.GetCostBasis() + h.GetNetIncome(capitalGainsRate))
 }
 
 func (h Hsa) GetGrossIncome() float64 {
-	return common.To2f(h.CapitalGains)
+	return format.To2f(h.CapitalGains)
 }
 
 func (h Hsa) GetNetIncome(capitalGainsRate float64) float64 {
-	return common.To2f(h.CapitalGains)
+	return format.To2f(h.CapitalGains)
 }

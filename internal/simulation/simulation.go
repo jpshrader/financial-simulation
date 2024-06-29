@@ -2,13 +2,13 @@ package simulation
 
 import (
 	"github.com/jpshrader/financial-simulation/internal/assets"
-	"github.com/jpshrader/financial-simulation/internal/common"
+	"github.com/jpshrader/financial-simulation/internal/compound"
 	"github.com/jpshrader/financial-simulation/internal/expenses"
 )
 
 type Instructions struct {
 	Years               int
-	CompoundingSchedule common.CompoundingSchedule
+	CompoundingSchedule compound.CompoundingSchedule
 	Snapshot            Snapshot
 }
 
@@ -27,7 +27,7 @@ func Simulate(instructions Instructions) []Snapshot {
 	return snapshots
 }
 
-func simulate(data Snapshot, iteration int, schedule common.CompoundingSchedule) Snapshot {
+func simulate(data Snapshot, iteration int, schedule compound.CompoundingSchedule) Snapshot {
 	newAssets := make([]assets.Asset, len(data.Assets))
 	for i, a := range data.Assets {
 		newAssets[i] = a.Compound(schedule, iteration%int(schedule) == 0)

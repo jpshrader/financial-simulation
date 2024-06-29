@@ -1,10 +1,12 @@
 package assets
 
-import "github.com/jpshrader/financial-simulation/internal/common"
+import (
+	"github.com/jpshrader/financial-simulation/internal/compound"
+)
 
 type Asset interface {
 	GetName() string
-	Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset
+	Compound(schedule compound.CompoundingSchedule, isNewYear bool) Asset
 	GetCostBasis() float64
 	GetGrossValue() float64
 	GetNetValue(capitalGainsRate float64) float64

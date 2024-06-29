@@ -1,4 +1,4 @@
-package common
+package compound
 
 type CompoundingSchedule int
 

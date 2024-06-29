@@ -1,7 +1,8 @@
 package assets
 
 import (
-	"github.com/jpshrader/financial-simulation/internal/common"
+	"github.com/jpshrader/financial-simulation/internal/compound"
+	"github.com/jpshrader/financial-simulation/internal/format"
 )
 
 type RothIra struct {
@@ -17,7 +18,7 @@ func (r RothIra) GetName() string {
 	return r.Name
 }
 
-func (r RothIra) Compound(schedule common.CompoundingSchedule, isNewYear bool) Asset {
+func (r RothIra) Compound(schedule compound.CompoundingSchedule, isNewYear bool) Asset {
 	if isNewYear {
 		r.YearToDateGrowth = 0
 	}
@@ -31,21 +32,21 @@ func (r RothIra) Compound(schedule common.CompoundingSchedule, isNewYear bool) A
 }
 
 func (r RothIra) GetCostBasis() float64 {
-	return common.To2f(r.CostBasis)
+	return format.To2f(r.CostBasis)
 }
 
 func (r RothIra) GetGrossValue() float64 {
-	return common.To2f(r.CostBasis + r.CapitalGains)
+	return format.To2f(r.CostBasis + r.CapitalGains)
 }
 
 func (r RothIra) GetNetValue(capitalGainsRate float64) float64 {
-	return common.To2f(r.GetCostBasis() + r.GetNetIncome(capitalGainsRate))
+	return format.To2f(r.GetCostBasis() + r.GetNetIncome(capitalGainsRate))
 }
 
 func (r RothIra) GetGrossIncome() float64 {
-	return common.To2f(r.CapitalGains)
+	return format.To2f(r.CapitalGains)
 }
 
 func (r RothIra) GetNetIncome(capitalGainsRate float64) float64 {
-	return common.To2f(r.CapitalGains)
+	return format.To2f(r.CapitalGains)
 }

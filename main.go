@@ -5,14 +5,15 @@ import (
 	"strings"
 
 	"github.com/jpshrader/financial-simulation/internal/assets"
-	"github.com/jpshrader/financial-simulation/internal/common"
+	"github.com/jpshrader/financial-simulation/internal/compound"
+	"github.com/jpshrader/financial-simulation/internal/format"
 	"github.com/jpshrader/financial-simulation/internal/simulation"
 )
 
 func main() {
 	instructions := simulation.Instructions{
 		Years:               10,
-		CompoundingSchedule: common.Annually,
+		CompoundingSchedule: compound.Annually,
 		Snapshot: simulation.Snapshot{
 			Year: 2024,
 			Assets: []assets.Asset{
@@ -42,7 +43,7 @@ func main() {
 
 func logAsset(a assets.Asset) {
 	fmt.Printf("%s\n", strings.ToUpper(a.GetName()))
-	fmt.Printf("cost basis: $%.2f\n", common.To2f(a.GetCostBasis()))
-	fmt.Printf("capital gains: $%.2f\n", common.To2f(a.GetGrossIncome()))
-	fmt.Printf("value: $%.2f\n", common.To2f(a.GetGrossValue()))
+	fmt.Printf("cost basis: $%.2f\n", format.To2f(a.GetCostBasis()))
+	fmt.Printf("capital gains: $%.2f\n", format.To2f(a.GetGrossIncome()))
+	fmt.Printf("value: $%.2f\n", format.To2f(a.GetGrossValue()))
 }
